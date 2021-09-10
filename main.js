@@ -3,7 +3,7 @@ function setup() {
   canvas.center();
   video = createCapture(VIDEO);
   video.hide();
-  poseNet = ml5.poseNet(video, modelLoded);
+  classifier = ml5.imageClassifier('MobileNet',modelLoaded);
 }
 
 function modelLoded()
@@ -11,7 +11,16 @@ function modelLoded()
 console.log("ModelLoded IS LODED")
 }
 
-function draw()
+function gotResult(error, results)
 {
-  image(video, 0, 0, 480, 380)  
+if (error){
+console.log(error);
 }
+else
+{
+document.getElementById("bta").innerHTML = results[0].label;
+document.getElementById("tta").innerHTML = results[0].confidence.toFixed(3);
+}
+}
+
+
